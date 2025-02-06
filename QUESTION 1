@@ -1,0 +1,128 @@
+import java.util.Scanner;
+
+public class Main {
+
+    // Instance variables for car details
+    private String brand;
+    private String model;
+    private boolean available;
+
+    // Constructor to initialize the car details
+    public Main(String brand, String model) {
+        this.brand = brand;
+        this.model = model;
+        this.available = true;  // Initially, the car is available
+    }
+
+    // Method to display the availability of the car
+    public void showAvailability() {
+        if (available) {
+            System.out.println(brand + " " + model + " is ready for you to rent.");
+        } else {
+            System.out.println(brand + " " + model + " is currently unavailable.");
+        }
+    }
+
+    // Method to rent the car
+    public void rent() {
+        if (available) {
+            available = false;  // Mark the car as rented
+            System.out.println("You have successfully rented the " + brand + " " + model + ".");
+        } else {
+            System.out.println("Oops! The " + brand + " " + model + " is not available for rent right now.");
+        }
+    }
+
+    // Method to return the car
+    public void returnCar() {
+        if (!available) {
+            available = true;  // Mark the car as available again
+            System.out.println("Thank you for returning the " + brand + " " + model + ". It's now available again.");
+        } else {
+            System.out.println("The " + brand + " " + model + " hasn't been rented, so there's nothing to return.");
+        }
+    }
+
+    // Main method to handle rental and return actions
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); // Scanner to collect user input
+
+        // Creating car objects with the new car names
+        Main tesla = new Main("Tesla", "Model S");
+        Main srt = new Main("Dodge", "SRT");
+        Main subaru = new Main("Subaru", "WRX");
+
+        // Asking for the customer's name
+        System.out.print("Please provide your name: ");
+        String customerName = scanner.nextLine();
+
+        // Asking the customer which car they would like to rent
+        System.out.print("\nHi, " + customerName + ". Which car would you like to rent? (Tesla, SRT, Subaru): ");
+        String carChoice = scanner.nextLine();
+
+        boolean rented = false;
+
+        // Check the customer's choice and rent the car if it's available
+        switch (carChoice.toLowerCase()) {
+            case "tesla":
+                if (tesla.available) {
+                    tesla.rent();
+                    rented = true;
+                } else {
+                    System.out.println("Sorry, the Tesla Model S is currently unavailable.");
+                }
+                break;
+            case "srt":
+                if (srt.available) {
+                    srt.rent();
+                    rented = true;
+                } else {
+                    System.out.println("Sorry, the Dodge SRT is currently unavailable.");
+                }
+                break;
+            case "subaru":
+                if (subaru.available) {
+                    subaru.rent();
+                    rented = true;
+                } else {
+                    System.out.println("Sorry, the Subaru WRX is currently unavailable.");
+                }
+                break;
+            default:
+                System.out.println("Invalid selection. Please choose either Tesla, SRT, or Subaru.");
+        }
+
+        if (!rented) {
+            System.out.println("\nNo car was rented. Please try again later.");
+            return;
+        }
+
+        // Ask the customer which car they're returning
+        System.out.print("\nWhich car are you returning? (Tesla, SRT, Subaru): ");
+        String returnCarChoice = scanner.nextLine();
+
+        // Handle the return process based on the car selected
+        switch (returnCarChoice.toLowerCase()) {
+            case "tesla":
+                tesla.returnCar();
+                break;
+            case "srt":
+                srt.returnCar();
+                break;
+            case "subaru":
+                subaru.returnCar();
+                break;
+            default:
+                System.out.println("Invalid selection. Please choose either Tesla, SRT, or Subaru.");
+        }
+
+        // After return, show the availability of all cars
+        System.out.println("\nCars currently available for rent after your return:");
+        tesla.showAvailability();
+        srt.showAvailability();
+        subaru.showAvailability();
+
+        // Close the scanner to avoid resource leak
+        scanner.close();
+    }
+}
