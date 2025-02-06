@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in); // Scanner for user input
+        
+        String user, pass;
+        
+        // Prompting user for input
+        System.out.print("Enter user name: ");
+        user = console.nextLine();
+        System.out.print("Enter password: ");
+        pass = console.nextLine();
+        
+        // Checking username and password
+        if (user.equals("admin") && pass.equals("backdoor")) {
+            System.out.println("Welcome back!"); // Corrected method name
+        } else {
+            System.out.println("Wrong user name or password!!!"); // Corrected method name
+        }
+
+        console.close(); // Closing the scanner to prevent memory leak
+    }
+}
